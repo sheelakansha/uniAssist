@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+
+# Node / Vite
+frontend/node_modules/
+frontend/dist/
+
+# Local state and source material
+runtime/
+chroma-data/
+vectorstore/
+real_corpus/
+*.sqlite3
+*.db-journal
+
+# Environment and editor files
+.env
+.vscode/
+.idea/
+*.log
+evaluation/report.json
+
+# Generated deliverables
+*.zip

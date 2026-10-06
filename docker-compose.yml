@@ -1,0 +1,17 @@
+services:
+  chroma:
+    image: chromadb/chroma
+    ports: ["8001:8000"]
+    volumes: ["./chroma-data:/data"]
+  backend:
+    build: .
+    command: uvicorn app.api.main:app --host 0.0.0.0 --port 8000
+    ports: ["8000:8000"]
+    environment: ["LLM_MODE=${LLM_MODE:-mock}", "LOCAL_LLM_BASE_URL=${LOCAL_LLM_BASE_URL:-http://host.docker.internal:11434/v1}", "CHROMA_HOST=chroma", "CHROMA_PORT=8000"]
+    volumes: ["./runtime:/app/runtime"]
+    depends_on: [chroma]
+  frontend:
+    build: ./frontend
+    ports: ["5173:5173"]
+    environment: ["BACKEND_URL=http://backend:8000"]
+    depends_on: [backend]
